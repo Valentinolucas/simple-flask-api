@@ -44,7 +44,7 @@ stages:
       displayName: "Install poetry"
     
     - script: 
-        sudo export PATH=$PATH:$HOME/.poetry/env
+        sudo source $HOME/.poetry/env
       workingDirectory: $(projectRoot)
       displayName: "Adding Poetry to Path"
 
