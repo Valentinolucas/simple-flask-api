@@ -42,11 +42,18 @@ stages:
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
       workingDirectory: $(projectRoot)
       displayName: "Install poetry"
+    
+    - script: 
+        source $HOME/.poetry/env
+      workingDirectory: $(projectRoot)
+      displayName: "Adding Poetry to Path"
 
     - script: 
         poetry install
       workingDirectory: $(projectRoot)
       displayName: "Installing dependencies" 
+
+    
     
     #- script: |
     #    python -m venv antenv
