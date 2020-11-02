@@ -1,0 +1,177 @@
+openapi: 3.0.0
+
+
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/lucasfantini/Simple-CRUD-API/1.0.0
+  - description: localhost
+    url: http://127.0.0.1:5000
+    
+
+info:
+  description: This is a simple API
+  version: "1.0.0"
+  title: Simple C.R.U.D Inventory API
+  contact:
+    email: valentinolucasfantini@gmail.com
+  license:
+    name: LICENCE
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    
+
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+    
+
+paths:
+  /product:
+    get:
+      tags:
+        - developers
+      summary: searches product
+      operationId: searchProduct
+      description: |
+        By passing in the appropriate options, you can search for
+        products in the system
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryItem'
+                  
+    post:
+      tags:
+        - admins
+      summary: adds a product into database
+      description: Adds an item to the system
+      parameters: 
+        - name: id
+          in: query
+          required: True
+          schema: 
+            type: integer
+            example: 1
+            
+        - name: name
+          in: query
+          required: True
+          schema:
+            type: string
+            example: "product 1"
+          
+        - name: description
+          in: query
+          required: True
+          schema:
+            type: string
+            example: "product description"
+          
+        - name: qty
+          in: query
+          required: True
+          schema:
+            type: integer
+            example: 25
+          
+      responses:
+        '201':
+          description: item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItem'
+  
+  /product/{id}:
+    get:
+      tags: 
+        - developers
+      summary: Get specific product
+      description: Get information from specific product
+      parameters:
+        - in: path
+          name: id
+          required: True
+          description: Id of the product
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItem'
+          
+    put:
+      tags:
+        - admins 
+      summary: Update product
+      description: Use this method to update and specific product using the id.
+      parameters:
+        - in: path
+          name: id
+          required: True
+          description: product id
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItem'
+    
+    delete:
+      tags:
+        - admins
+      summary: Delete product by id
+      description: Delete a prodcut from the database using the id
+      parameters: 
+        - in: path
+          name: id
+          required: True
+          description: Product id
+          schema:
+            type: integer
+            example: 2
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItem'
+                  
+        
+components:
+  schemas:
+    InventoryItem:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - qty
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Product 1
+        description:
+          type: string
+          example: 'This is product 1 description'
+        qty:
+          type: integer
+          example: 10
