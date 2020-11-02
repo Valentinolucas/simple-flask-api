@@ -49,7 +49,7 @@ stages:
       displayName: "Adding Poetry to Path"
 
     - script: 
-        echo $PATH
+        poetry install
       workingDirectory: $(projectRoot)
       displayName: "Installing dependencies" 
 
