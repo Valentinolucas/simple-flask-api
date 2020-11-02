@@ -51,13 +51,6 @@ stages:
         poetry --version
       condition: always()
     
-    - script: 
-        cd myapi
-
-        poetry run python3 application.py
-      displayName: "Running application.py"
-
-
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
@@ -96,3 +89,9 @@ stages:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+              
+          - script: 
+              cd myapi
+
+              poetry run python3 application.py
+            displayName: "Running application.py"            
