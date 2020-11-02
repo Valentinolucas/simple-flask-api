@@ -44,12 +44,12 @@ stages:
       displayName: "Install poetry"
     
     - script: 
-        sudo source $HOME/.poetry/env
+        source $HOME/.poetry/env
       workingDirectory: $(projectRoot)
       displayName: "Adding Poetry to Path"
 
     - script: 
-        sudo poetry install
+        poetry install
       workingDirectory: $(projectRoot)
       displayName: "Installing dependencies" 
 
