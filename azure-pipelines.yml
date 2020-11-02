@@ -39,17 +39,17 @@ stages:
       displayName: 'Use Python $(pythonVersion)'
 
     - script: 
-        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+        sudo curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
       workingDirectory: $(projectRoot)
       displayName: "Install poetry"
     
     - script: 
-        export PATH=$PATH:$HOME/.poetry/env
+        sudo export PATH=$PATH:$HOME/.poetry/env
       workingDirectory: $(projectRoot)
       displayName: "Adding Poetry to Path"
 
     - script: 
-        poetry install
+        sudo poetry install
       workingDirectory: $(projectRoot)
       displayName: "Installing dependencies" 
 
