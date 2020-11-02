@@ -38,20 +38,22 @@ stages:
         versionSpec: '$(pythonVersion)'
       displayName: 'Use Python $(pythonVersion)'
 
-    - script: 
-        sudo curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
-      workingDirectory: $(projectRoot)
-      displayName: "Install poetry"
-    
-    - script: 
-        source $HOME/.poetry/env
-      workingDirectory: $(projectRoot)
-      displayName: "Adding Poetry to Path"
+   # - script: 
+    #    sudo curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+     # workingDirectory: $(projectRoot)
+      #displayName: "Install poetry"
+    - script: |
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 
-    - script: 
+        echo "##vso[task.setvariable variable=PATH]${PATH}:$HOME/.poetry/bin" 
+        source $HOME/.poetry/env
+
+        poetry install
+      displayName: 'Install package and tools'
+
+    - script: |
         poetry --version
-      workingDirectory: $(projectRoot)
-      displayName: "Installing dependencies" 
+      condition: always()
 
     
     
